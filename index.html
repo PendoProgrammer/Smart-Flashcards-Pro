@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Learning App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-brain"></i> Flashcard Learning App</h1>
+            <p class="creator">Created by <span>Mr. Ali</span></p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="study">
+                <i class="fas fa-book-open"></i> Study
+            </button>
+            <button class="tab-btn" data-tab="create">
+                <i class="fas fa-plus"></i> Create
+            </button>
+            <button class="tab-btn" data-tab="manage">
+                <i class="fas fa-cog"></i> Manage
+            </button>
+        </nav>
+
+        <!-- Study Tab -->
+        <div class="tab-content active" id="study">
+            <div class="stats-panel">
+                <div class="stat-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span class="stat-number" id="totalCards">0</span>
+                    <span class="stat-label">Total Cards</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="stat-number" id="studiedCards">0</span>
+                    <span class="stat-label">Studied</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-percentage"></i>
+                    <span class="stat-number" id="accuracy">0%</span>
+                    <span class="stat-label">Accuracy</span>
+                </div>
+            </div>
+
+            <div class="flashcard-container">
+                <div class="flashcard" id="flashcard">
+                    <div class="card-front">
+                        <div class="card-content">
+                            <p id="questionText">Click "Start Study" to begin!</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-counter" id="cardCounter">0 / 0</span>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="card-content">
+                            <p id="answerText">Answer will appear here</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-counter" id="cardCounterBack">0 / 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="study-controls">
+                <button class="btn btn-primary" id="startStudy">
+                    <i class="fas fa-play"></i> Start Study
+                </button>
+                <button class="btn btn-secondary hidden" id="flipCard">
+                    <i class="fas fa-sync-alt"></i> Flip Card
+                </button>
+                <button class="btn btn-success hidden" id="correctBtn">
+                    <i class="fas fa-check"></i> Correct
+                </button>
+                <button class="btn btn-danger hidden" id="incorrectBtn">
+                    <i class="fas fa-times"></i> Incorrect
+                </button>
+                <button class="btn btn-info hidden" id="nextCard">
+                    <i class="fas fa-arrow-right"></i> Next Card
+                </button>
+            </div>
+        </div>
+
+        <!-- Create Tab -->
+        <div class="tab-content" id="create">
+            <div class="create-form">
+                <h2><i class="fas fa-plus-circle"></i> Create New Flashcard</h2>
+                
+                <div class="form-group">
+                    <label for="categoryInput">
+                        <i class="fas fa-tag"></i> Category
+                    </label>
+                    <input type="text" id="categoryInput" placeholder="e.g., Math, Science, Language">
+                </div>
+
+                <div class="form-group">
+                    <label for="questionInput">
+                        <i class="fas fa-question-circle"></i> Question
+                    </label>
+                    <textarea id="questionInput" placeholder="Enter your question here..." rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="answerInput">
+                        <i class="fas fa-lightbulb"></i> Answer
+                    </label>
+                    <textarea id="answerInput" placeholder="Enter the answer here..." rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="difficultySelect">
+                        <i class="fas fa-chart-bar"></i> Difficulty
+                    </label>
+                    <select id="difficultySelect">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" id="addCard">
+                    <i class="fas fa-plus"></i> Add Flashcard
+                </button>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="preview-section">
+                <h3><i class="fas fa-eye"></i> Preview</h3>
+                <div class="preview-card">
+                    <div class="preview-front">
+                        <strong>Question:</strong>
+                        <p id="previewQuestion">Question will appear here...</p>
+                    </div>
+                    <div class="preview-back hidden">
+                        <strong>Answer:</strong>
+                        <p id="previewAnswer">Answer will appear here...</p>
+                    </div>
+                    <button class="btn btn-small" id="previewFlip">
+                        <i class="fas fa-sync-alt"></i> Flip
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Tab -->
+        <div class="tab-content" id="manage">
+            <div class="manage-header">
+                <h2><i class="fas fa-list"></i> Manage Flashcards</h2>
+                <div class="manage-controls">
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                    </select>
+                    <button class="btn btn-danger" id="clearAll">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                </div>
+            </div>
+
+            <div class="cards-grid" id="cardsGrid">
+                <div class="no-cards">
+                    <i class="fas fa-folder-open"></i>
+                    <p>No flashcards created yet. Go to Create tab to add some!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message hidden" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        <span></span>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay hidden" id="modalOverlay">
+        <div class="modal">
+            <h3>Confirm Action</h3>
+            <p id="modalText">Are you sure?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="modalCancel">Cancel</button>
+                <button class="btn btn-danger" id="modalConfirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
